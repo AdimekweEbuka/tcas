@@ -50,17 +50,20 @@ func generateRandomInt(min, max int) int {
 	return (rand.Intn(max - min + 1) + min)
 }
 
+func (a *Airplane) newBearingandAltitude() {
+	rand.Seed(time.Now().UnixNano())
+	a.bearing = generateRandomInt(minimumBearing, maximumBearing)
+	a.altitude = generateRandomInt(minimumAltitude, maximumAltitude)
+}
+
 func initiateTCAS(airplaneOne, airplaneTwo Airplane) {
 
 	initiate:
 	if airplaneOne.altitude == airplaneTwo.altitude && airplaneOne.bearing == airplaneTwo.bearing {
 		fmt.Println("WARNING!!! COLLISION AHEAD!!!")
 	}
-	rand.Seed(time.Now().UnixNano())
-	airplaneOne.bearing = generateRandomInt(minimumBearing, maximumBearing)
-	airplaneTwo.bearing = generateRandomInt(minimumBearing, maximumBearing)
-	airplaneOne.altitude = generateRandomInt(minimumAltitude, maximumAltitude)
-	airplaneTwo.altitude = generateRandomInt(minimumAltitude, maximumAltitude)
+	airplaneOne.newBearingandAltitude()
+	airplaneTwo.newBearingandAltitude()
 	goto initiate
 }
 
@@ -91,3 +94,9 @@ func main() {
 
 	initiateTCAS(airplane1, airplane2)
 }
+
+
+//GIT PUSH COMMAND
+// git add . (add all files that were modified)
+// git commit -m "message here" (add  message of the changes you made)
+// git push (push to github)
