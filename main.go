@@ -51,12 +51,10 @@ func generateRandomInt(min, max int) int {
 }
 
 func initiateTCAS(airplaneOne, airplaneTwo Airplane) {
-	// var collisionCourse bool
 
 	initiate:
 	if airplaneOne.altitude == airplaneTwo.altitude && airplaneOne.bearing == airplaneTwo.bearing {
 		fmt.Println("WARNING!!! COLLISION AHEAD!!!")
-		//collisionCourse = true
 	}
 	rand.Seed(time.Now().UnixNano())
 	airplaneOne.bearing = generateRandomInt(minimumBearing, maximumBearing)
@@ -64,12 +62,6 @@ func initiateTCAS(airplaneOne, airplaneTwo Airplane) {
 	airplaneOne.altitude = generateRandomInt(minimumAltitude, maximumAltitude)
 	airplaneTwo.altitude = generateRandomInt(minimumAltitude, maximumAltitude)
 	goto initiate
-	// for collisionCourse == false { 
-	// 	if airplaneOne.altitude == airplaneTwo.altitude && airplaneOne.bearing == airplaneTwo.bearing {
-	// 		fmt.Println("WARNING!!! COLLISION AHEAD!!!")
-	// 		collisionCourse = true
-	// 	}
-	// }
 }
 
 // func generateRandomFloat(min, max float64) float64 {
