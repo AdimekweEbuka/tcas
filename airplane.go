@@ -24,7 +24,7 @@ func (a *airplane) takeOff() {
 		a.Altitude = GenerateRandomInt(maximumAltitude)
 		a.Bearing = GenerateRandomInt(maximumBearing)
 		airboneAirplanes = append(airboneAirplanes, a)
-		go a.initiateTCAS()
+		a.initiateTCAS()
 	} else {
 		fmt.Println(a.CallSign, "You do not have takeoff permission")
 	}
@@ -60,16 +60,37 @@ func (a *airplane) landAirplane() {
 		a.Altitude = 0
 	}
 	fmt.Println("We have successfully landed", a.CallSign, "hope you enjoyed your flight?")
+	airplanePosition := a.airplanePosiion(airboneAirplanes)
+	airboneAirplanes = removeAirplane(airboneAirplanes, airplanePosition)
 }
 
 //StartTrip function
 func (a *airplane) StartTrip() {
 	//Taxi Permission
-	go a.taxiCall()
+	a.taxiCall()
 	//Takeoff Permision
-	go a.takeOff()
+	a.takeOff()
+	fmt.Println("There are", len(airboneAirplanes), "airborne airplanes")
+	fmt.Println(a.airplanePosiion(airboneAirplanes))
 	//Cruising Altitude
-	go a.cruisingAltitude()
+	a.cruisingAltitude()
 	//Land Airplane
-	go a.landAirplane()
+	a.landAirplane()
+	fmt.Println("There are", len(airboneAirplanes), "airborne airplanes")
+	fmt.Println(a.airplanePosiion(airboneAirplanes))
+
+}
+
+func (a *airplane) airplanePosiion(airborneAirplanes []*airplane) int {
+	for k, v := range airborneAirplanes {
+		if a.CallSign == v.CallSign {
+			return k
+		}
+	}
+	return -1 //not found.
+}
+
+func removeAirplane(airboneAirplanes []*airplane, planePosition int) []*airplane {
+	airboneAirplanes[planePosition] = airboneAirplanes[len(airboneAirplanes)-1]
+	return airboneAirplanes[:len(airboneAirplanes)-1]
 }

@@ -24,10 +24,14 @@ func main() {
 	airplane2.StartTrip()
 	fmt.Printf("\n")
 	airplane3.StartTrip()
-	time.Sleep(time.Second * 5)
+	time.Sleep(time.Second * 1)
 }
 
 // GITHUB
 // git add .
 // git commit -m "my message"
 // git push origin master
+
+// NEW BRANCH
+// git checkout -b branch_name
+// git push -u origin branch_name
